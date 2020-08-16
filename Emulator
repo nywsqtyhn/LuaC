@@ -1,0 +1,257 @@
+local lua_newstate, lua_close, luac_execute = loadstring(game:HttpGet("https://raw.githubusercontent.com/OpenGamerTips/luacvm/master/module.lua"))()
+local CurrentState = lua_newstate()
+
+-- UI
+local LuaC = Instance.new("ScreenGui")
+local Executor = Instance.new("Frame")
+local Execute = Instance.new("TextButton")
+local ResetState = Instance.new("TextButton")
+local Clear = Instance.new("TextButton")
+local TopBar = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local EditorFrame = Instance.new("ScrollingFrame")
+local Editor = Instance.new("TextBox")
+local KeywordHighlight = Instance.new("TextLabel")
+local Lines = Instance.new("TextLabel")
+
+LuaC.Name = math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)..math.random(0, 9)
+LuaC.Parent = game:GetService("CoreGui")
+LuaC.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Executor.Name = "Executor"
+Executor.Parent = LuaC
+Executor.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Executor.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Executor.BorderSizePixel = 0
+Executor.Position = UDim2.new(0.0793346167, 0, 0.140202716, 0)
+Executor.Size = UDim2.new(0, 570, 0, 300)
+Executor.Active = true
+Executor.Draggable = true
+
+Execute.Name = "Execute"
+Execute.Parent = Executor
+Execute.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Execute.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Execute.BorderSizePixel = 0
+Execute.Position = UDim2.new(0.0192982461, 0, 0.856666684, 0)
+Execute.Size = UDim2.new(0, 233, 0, 35)
+Execute.Font = Enum.Font.SourceSansLight
+Execute.Text = "Execute"
+Execute.TextColor3 = Color3.fromRGB(255, 255, 255)
+Execute.TextScaled = true
+Execute.TextSize = 14.000
+Execute.TextWrapped = true
+Execute.MouseButton1Down:Connect(function()
+	luac_execute(CurrentState, Editor.Text)
+end)
+
+ResetState.Name = "ResetState"
+ResetState.Parent = Executor
+ResetState.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+ResetState.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ResetState.BorderSizePixel = 0
+ResetState.Position = UDim2.new(0.705263138, 0, 0.856666684, 0)
+ResetState.Size = UDim2.new(0, 157, 0, 35)
+ResetState.Font = Enum.Font.SourceSansLight
+ResetState.Text = "Reset State"
+ResetState.TextColor3 = Color3.fromRGB(255, 255, 255)
+ResetState.TextScaled = true
+ResetState.TextSize = 14.000
+ResetState.TextWrapped = true
+ResetState = function()
+	lua_close(CurrentState)
+	CurrentState = lua_newstate()
+end
+
+Clear.Name = "Clear"
+Clear.Parent = Executor
+Clear.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Clear.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Clear.BorderSizePixel = 0
+Clear.Position = UDim2.new(0.44035089, 0, 0.856666684, 0)
+Clear.Size = UDim2.new(0, 145, 0, 35)
+Clear.Font = Enum.Font.SourceSansLight
+Clear.Text = "Clear"
+Clear.TextColor3 = Color3.fromRGB(255, 255, 255)
+Clear.TextScaled = true
+Clear.TextSize = 14.000
+Clear.TextWrapped = true
+Clear.MouseButton1Down:Connect(function()
+	Editor.Text = ""
+end)
+
+TopBar.Name = "TopBar"
+TopBar.Parent = Executor
+TopBar.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+TopBar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TopBar.BorderSizePixel = 0
+TopBar.Position = UDim2.new(5.35396119e-08, 0, 0, 0)
+TopBar.Size = UDim2.new(0, 570, 0, 35)
+
+Title.Name = "Title"
+Title.Parent = TopBar
+Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Title.BackgroundTransparency = 1.000
+Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 0
+Title.Position = UDim2.new(0.018999977, 0, 0, 0)
+Title.Size = UDim2.new(0, 559, 0, 35)
+Title.Font = Enum.Font.SourceSansLight
+Title.Text = "Lua C Executor"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
+Title.TextSize = 14.000
+Title.TextWrapped = true
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+EditorFrame.Name = "EditorFrame"
+EditorFrame.Parent = Executor
+EditorFrame.Active = true
+EditorFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+EditorFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+EditorFrame.BorderSizePixel = 0
+EditorFrame.Position = UDim2.new(0.0190000292, 0, 0.147000015, 0)
+EditorFrame.Size = UDim2.new(0, 548, 0, 206)
+EditorFrame.ZIndex = 2
+EditorFrame.CanvasSize = UDim2.new(0, 0, 0, 182)
+
+Editor.Name = "Editor"
+Editor.Parent = EditorFrame
+Editor.Active = false
+Editor.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Editor.BackgroundTransparency = 1.000
+Editor.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Editor.BorderSizePixel = 0
+Editor.Position = UDim2.new(0.0537226312, 0, 0, 0)
+Editor.Size = UDim2.new(0, 518, 1000, 0)
+Editor.ZIndex = 3
+Editor.ClearTextOnFocus = false
+Editor.Font = Enum.Font.Code
+Editor.MultiLine = true
+Editor.PlaceholderColor3 = Color3.fromRGB(0, 0, 0)
+Editor.Text = "-- Comments like this will be ignored."
+Editor.TextColor3 = Color3.fromRGB(255, 255, 255)
+Editor.TextSize = 14.000
+Editor.TextWrapped = true
+Editor.TextXAlignment = Enum.TextXAlignment.Left
+Editor.TextYAlignment = Enum.TextYAlignment.Top
+
+KeywordHighlight.Name = "KeywordHighlight"
+KeywordHighlight.Parent = Editor
+KeywordHighlight.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+KeywordHighlight.BackgroundTransparency = 1.000
+KeywordHighlight.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KeywordHighlight.BorderSizePixel = 0
+KeywordHighlight.Selectable = true
+KeywordHighlight.Size = UDim2.new(1, 0, 1, 0)
+KeywordHighlight.ZIndex = 3
+KeywordHighlight.Font = Enum.Font.Code
+KeywordHighlight.Text = "getglobal"
+KeywordHighlight.TextColor3 = Color3.fromRGB(248, 109, 124)
+KeywordHighlight.TextSize = 14.000
+KeywordHighlight.TextStrokeColor3 = Color3.fromRGB(248, 109, 124)
+KeywordHighlight.TextWrapped = true
+KeywordHighlight.TextXAlignment = Enum.TextXAlignment.Left
+KeywordHighlight.TextYAlignment = Enum.TextYAlignment.Top
+
+Lines.Name = "Lines"
+Lines.Parent = EditorFrame
+Lines.Active = true
+Lines.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Lines.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Lines.BorderSizePixel = 0
+Lines.Position = UDim2.new(0.000310187781, 0, 0, 0)
+Lines.Selectable = true
+Lines.Size = UDim2.new(0, 21, 1000, 0)
+Lines.ZIndex = 5
+Lines.Font = Enum.Font.Code
+Lines.Text = "1   2   3"
+Lines.TextColor3 = Color3.fromRGB(255, 255, 255)
+Lines.TextSize = 14.000
+Lines.TextWrapped = true
+Lines.TextYAlignment = Enum.TextYAlignment.Top
+
+local function GWKQ_fake_script()
+	local script = Instance.new('LocalScript', EditorFrame)
+	script.Name = "EditorScript"
+
+	local Editor = script.Parent.Editor
+	local Lines = script.Parent.Lines
+	local Scroll = script.Parent
+	local Keywords = {
+		"getglobal";
+		"getfield";
+		"setfield";
+		"pushvalue";
+		"pushstring";
+		"pushboolean";
+		"pushbool";
+		"pushnumber";
+		"pcall";
+		"call";
+		"clearstack";
+		"printstack";
+		"emptystack";
+		"gettop";
+		"settop";
+		"pushnil";
+		"insert";
+		"pop";
+		"next";
+		"createtable";
+		"newtable";
+		"settable";
+		"tonumber";
+		"tostring";
+		"touserdata";
+		"newuserdata";
+	}
+	
+	local function Highlight()
+		local Text = Editor.Text
+		local KeywordMatch = {}
+		for i,v in pairs(Keywords) do
+			KeywordMatch[v] = i
+		end
+		
+		Text = Text:gsub("%S+", function(Word)
+			if KeywordMatch[Word] ~= nil then
+				return Word
+			else
+				return((" "):rep(#Word))
+			end
+		end)
+		
+		Editor.KeywordHighlight.Text = Text
+		return
+	end
+	
+	local function Update(Property)
+		if Property == "Text" then
+			local LineCount = 1
+			Scroll.CanvasSize = UDim2.new(0, 0, 0, 182)
+			Lines.Text = LineCount.."\n"
+			
+			Highlight()
+			Editor.Text = Editor.Text:gsub("\n", function()
+				LineCount = LineCount + 1
+				Lines.Text = Lines.Text..LineCount.."\n"
+				Scroll.CanvasSize = Scroll.CanvasSize + UDim2.new(0, 0, 0, 19)
+			end)
+		end
+	end
+	 
+	local function Up(x, y)
+		Scroll.CanvasPosition = Scroll.CanvasPosition + Vector2.new(0, 10)
+	end
+	 
+	local function Down(x, y)
+		Scroll.CanvasPosition = Scroll.CanvasPosition - Vector2.new(0, 10)
+	end
+	
+	Update("Text")
+	Editor.Changed:Connect(Update)
+	Editor.MouseWheelForward:Connect(Down)
+	Editor.MouseWheelBackward:Connect(Up)
+end
+coroutine.wrap(GWKQ_fake_script)()
